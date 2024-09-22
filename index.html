@@ -13,7 +13,7 @@
             border: 1px solid #ccc;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 255, 0.1);
-            background-color: #bbbb00; /* APAGAR INDICAÇÂO VISUAL */
+            background-color: #bbbb00;
         }
         input, select, textarea {
             width: 100%;
@@ -51,13 +51,13 @@
     <h1>Ficha de Matrícula Escolar</h1>
     <form id="studentForm">
         <label for="name">Nome do Aluno:</label>
-        <input type="text" id="name" name="name" required>
+        <input type="text" id="name" name="name" required autocomplete="name">
 
         <label for="birthdate">Data de Nascimento:</label>
-        <input type="date" id="birthdate" name="birthdate" required>
-        
+        <input type="date" id="birthdate" name="birthdate" required autocomplete="bday">
+
         <label for="responsibleDocs">Documentos dos Responsáveis:</label>
-        <textarea id="responsibleDocs" name="responsibleDocs" rows="3" required></textarea>
+        <textarea id="responsibleDocs" name="responsibleDocs" rows="3" required autocomplete="off"></textarea>
 
         <label for="grade">Série:</label>
         <select id="grade" name="grade" required>
@@ -75,7 +75,6 @@
             <option value="Dino Bueno">Escola Municipal Dino Bueno</option>
             <option value="Genésio dos Santos">Escola Municipal Genésio dos Santos</option>
             <option value="Giusfredo Santini">Escola Municipal Giusfredo Santini</option>
-            <!-- adicionar escolas aqui -->
         </select>
 
         <button type="submit" id="submitButton">Enviar</button>
@@ -88,12 +87,10 @@
         form.addEventListener('submit', function(event) {
             event.preventDefault();
 
-            // Coletar dados do formulário
             const formData = new FormData(event.target);
             const data = {};
             formData.forEach((value, key) => (data[key] = value));
 
-            // Alterar o botão para estado "Aguardando"
             submitButton.textContent = 'Aguardando...';
             submitButton.classList.add('sending');
 
@@ -106,13 +103,11 @@
             })
             .then(response => response.json())
             .then(result => {
-                // Se os dados forem enviados com sucesso
                 submitButton.textContent = 'Salvo com Sucesso!';
                 submitButton.classList.remove('sending');
                 submitButton.classList.add('success');
             })
             .catch(error => {
-                // Em caso de erro
                 submitButton.textContent = 'Erro ao Salvar';
                 submitButton.classList.remove('sending');
                 submitButton.classList.add('error');
