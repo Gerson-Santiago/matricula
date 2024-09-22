@@ -97,14 +97,13 @@
             submitButton.textContent = 'Aguardando...';
             submitButton.classList.add('sending');
 
-            fetch('https://script.google.com/macros/s/AKfycbw6joxxcx930F_K9wFLN6RHRuEjaZ-vh4QvxvENX9f-_w7fELDNdnqhrSBjQx4lqzZrog/exec, {
+            fetch('https://script.google.com/macros/s/AKfycbw6joxxcx930F_K9wFLN6RHRuEjaZ-vh4QvxvENX9f-_w7fELDNdnqhrSBjQx4lqzZrog/exec', {
                 method: 'POST',
                 body: JSON.stringify(data),
                 headers: {
                     'Content-Type': 'application/json'
                 }
             })
-
             .then(response => response.json())
             .then(result => {
                 // Se os dados forem enviados com sucesso
