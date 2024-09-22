@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha de Matrícula</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 255, 0.1);
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Ficha de Matrícula Escolar</h1>
+    <form id="studentForm">
+        <label for="name">Nome do Aluno:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="birthdate">Data de Nascimento:</label>
+        <input type="date" id="birthdate" name="birthdate" required>
+        
+        <label for="responsibleDocs">Documentos dos Responsáveis:</label>
+        <textarea id="responsibleDocs" name="responsibleDocs" rows="3" required></textarea>
+
+        <label for="grade">Série:</label>
+        <select id="grade" name="grade" required>
+            <option value="">Selecione...</option>
+            <option value="1">1º Ano</option>
+            <option value="2">2º Ano</option>
+            <option value="3">3º Ano</option>
+            <option value="4">4º Ano</option>
+            <option value="5">5º Ano</option>
+        </select>
+
+        <label for="school">Escola:</label>
+        <select id="school" name="school" required>
+            <option value="">Selecione...</option>
+            <option value="Dino Bueno">Escola Municipal Dino Bueno</option>
+            <option value="Genésio dos Santos">Escola Municipal Genésio dos Santos</option>
+            <option value="Giusfredo Santini">Escola Municipal Giusfredo Santini</option>
+            <!-- adicione mais escolas aqui -->
+        </select>
+
+        <button type="submit">Enviar</button>
+    </form>
+
+    <script>
+        document.querySelector('#studentForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            // Coletar dados do formulário
+            const formData = new FormData(event.target);
+            
+            // Criar objeto para envio
+            const data = {};
+            formData.forEach((value, key) => (data[key] = value));
+
+            // Enviar os dados para o Google Apps Script
+            fetch('https://your-script.google.com/macros/s/YOUR-DEPLOYMENT-ID/exec', {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(result => {
+                alert('Dados enviados com sucesso!');
+            })
+            .catch(error => {
+                console.error('Erro ao enviar os dados:', error);
+            });
+        });
+    </script>
+</body>
+</html>
+```
+
+### Passo 2: Criação do Script do Google Apps Script
+
+Agora, você precisa criar um script do Google Apps Script para receber os dados enviados do formulário e armazená-los na planilha do Google:
+
+1. Acesse `https://script.google.com`.
+2. Clique em `Novo projeto`.
+3. Use o seguinte código como um ponto de partida para o seu script:
+
+```javascript
+function doPost(e) {
+  var sheet = SpreadsheetApp.openById("YOUR_SPREADSHEET_ID").getSheetByName("YOUR_SHEET_NAME");
+  var data = JSON.parse(e.postData.contents);
+
+  // Adiciona a linha de dados na última linha vazia da planilha
+  sheet.appendRow([data.name, data.birthdate, data.responsibleDocs, data.grade, data.school]);
+
+  return ContentService.createTextOutput(JSON.stringify({status: 'Success'})).setMimeType(ContentService.MimeType.JSON);
+}
+```
+
+4. Substitua `YOUR_SPREADSHEET_ID` pelo ID da sua planilha do Google e `YOUR_SHEET_NAME` pelo nome da aba onde deseja salvar os dados.
+5. Clique em `Implantar` > `Gerenciar implantações`.
+6. Clique em `Nova implantação`, configure como aplicativo web, e certifique-se de publicar o app para "Qualquer um, até mesmo anônimos".
+
+Depois de implantado, substitua `YOUR-DEPLOYMENT-ID` no código HTML pelo seu ID de implantação.
+
+Com isso, você terá um formulário que coleta dados e os insere em uma planilha do Google, criando um sistema simples de inscrição de alunos online!
