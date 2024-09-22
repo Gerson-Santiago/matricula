@@ -81,14 +81,15 @@
             const data = {};
             formData.forEach((value, key) => (data[key] = value));
 
-            // Enviar os dados para o Google Apps Script
-            fetch('https://your-script.google.com/macros/s/YOUR-DEPLOYMENT-ID/exec', {
-                method: 'POST',
-                body: JSON.stringify(data),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
+
+            fetch('https://script.google.com/macros/s/AKfycby6uCrXHJAApXojkeyp275LgzmTthF_Q_kzZTabnQ55vauzZBqL5t0afksly950FPalqg/exec', {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: {
+        'Content-Type': 'application/json'
+    }
+})
+
             .then(response => response.json())
             .then(result => {
                 alert('Dados enviados com sucesso!');
