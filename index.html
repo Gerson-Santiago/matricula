@@ -34,6 +34,15 @@
         button:hover {
             background-color: #45a049;
         }
+        button.sending {
+            background-color: #f0ad4e;
+        }
+        button.success {
+            background-color: #5cb85c;
+        }
+        button.error {
+            background-color: #d9534f;
+        }
     </style>
 </head>
 <body>
@@ -68,33 +77,45 @@
             <!-- adicione mais escolas aqui -->
         </select>
 
-        <button type="submit">Enviar</button>
+        <button type="submit" id="submitButton">Enviar</button>
     </form>
 
     <script>
-        document.querySelector('#studentForm').addEventListener('submit', function(event) {
+        const form = document.querySelector('#studentForm');
+        const submitButton = document.querySelector('#submitButton');
+
+        form.addEventListener('submit', function(event) {
             event.preventDefault();
+
             // Coletar dados do formulário
             const formData = new FormData(event.target);
-            
-            // Criar objeto para envio
             const data = {};
             formData.forEach((value, key) => (data[key] = value));
 
+            // Alterar o botão para estado "Aguardando"
+            submitButton.textContent = 'Aguardando...';
+            submitButton.classList.add('sending');
 
+            // Enviar os dados para o Google Apps Script
             fetch('https://script.google.com/macros/s/AKfycbyeYoXrS0btgOYlv5OJXv7PYYtgn0kWBTYUqaMLg_fl6sqbTcmxqN63Ja9uw4ZUU0jRJw/exec', {
-    method: 'POST',
-    body: JSON.stringify(data),
-    headers: {
-        'Content-Type': 'application/json'
-    }
-})
-
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
             .then(response => response.json())
             .then(result => {
-                alert('Dados enviados com sucesso!');
+                // Se os dados forem enviados com sucesso
+                submitButton.textContent = 'Salvo com Sucesso!';
+                submitButton.classList.remove('sending');
+                submitButton.classList.add('success');
             })
             .catch(error => {
+                // Em caso de erro
+                submitButton.textContent = 'Erro ao Salvar';
+                submitButton.classList.remove('sending');
+                submitButton.classList.add('error');
                 console.error('Erro ao enviar os dados:', error);
             });
         });
