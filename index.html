@@ -13,7 +13,7 @@
             border: 1px solid #ccc;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 255, 0.1);
-            background-color: #bbbb00;
+            background-color: #fff;
         }
         input, select, textarea {
             width: 100%;
@@ -94,7 +94,7 @@
             submitButton.textContent = 'Aguardando...';
             submitButton.classList.add('sending');
 
-            fetch('https://script.google.com/macros/s/AKfycbw6joxxcx930F_K9wFLN6RHRuEjaZ-vh4QvxvENX9f-_w7fELDNdnqhrSBjQx4lqzZrog/exec', {
+            fetch('https://script.google.com/macros/s/AKfycbwgBYU7qcgYxq7D1hWd9MCV-PxJs8kr-ZjN41l0DpW5KWJZGob8LbReFPXn1Km-21JRNQ/exec', {
                 method: 'POST',
                 body: JSON.stringify(data),
                 headers: {
