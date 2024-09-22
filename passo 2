@@ -1,0 +1,29 @@
+```
+
+### Passo 2: Criação do Script do Google Apps Script
+
+Agora, você precisa criar um script do Google Apps Script para receber os dados enviados do formulário e armazená-los na planilha do Google:
+
+1. Acesse `https://script.google.com`.
+2. Clique em `Novo projeto`.
+3. Use o seguinte código como um ponto de partida para o seu script:
+
+```javascript
+function doPost(e) {
+  var sheet = SpreadsheetApp.openById("YOUR_SPREADSHEET_ID").getSheetByName("YOUR_SHEET_NAME");
+  var data = JSON.parse(e.postData.contents);
+
+  // Adiciona a linha de dados na última linha vazia da planilha
+  sheet.appendRow([data.name, data.birthdate, data.responsibleDocs, data.grade, data.school]);
+
+  return ContentService.createTextOutput(JSON.stringify({status: 'Success'})).setMimeType(ContentService.MimeType.JSON);
+}
+```
+
+4. Substitua `YOUR_SPREADSHEET_ID` pelo ID da sua planilha do Google e `YOUR_SHEET_NAME` pelo nome da aba onde deseja salvar os dados.
+5. Clique em `Implantar` > `Gerenciar implantações`.
+6. Clique em `Nova implantação`, configure como aplicativo web, e certifique-se de publicar o app para "Qualquer um, até mesmo anônimos".
+
+Depois de implantado, substitua `YOUR-DEPLOYMENT-ID` no código HTML pelo seu ID de implantação.
+
+Com isso, você terá um formulário que coleta dados e os insere em uma planilha do Google, criando um sistema simples de inscrição de alunos online!
