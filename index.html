@@ -13,7 +13,7 @@
             border: 1px solid #ccc;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 255, 0.1);
-            background-color: #ffeb3b; /* APAGAR INDICAÇÂO VISUAL */
+            background-color: #fff; /* APAGAR INDICAÇÂO VISUAL */
         }
         input, select, textarea {
             width: 100%;
@@ -75,7 +75,7 @@
             <option value="Dino Bueno">Escola Municipal Dino Bueno</option>
             <option value="Genésio dos Santos">Escola Municipal Genésio dos Santos</option>
             <option value="Giusfredo Santini">Escola Municipal Giusfredo Santini</option>
-            <!-- adicione mais escolas aqui -->
+            <!-- adicionar escolas aqui -->
         </select>
 
         <button type="submit" id="submitButton">Enviar</button>
@@ -97,7 +97,7 @@
             submitButton.textContent = 'Aguardando...';
             submitButton.classList.add('sending');
 
-            fetch('https://script.google.com/macros/s/AKfycbxWHsREuT8OMRKzD7pJRXsWhYL9uwwH2fFWGsyPyo6X_A6FAReitocBqbiR_RObnh31SQ/exec', {
+            fetch('https://script.google.com/macros/s/AKfycbxcvLG9_x0SsFUMnRp1t4vhKzbaspNqa0A28vWItanX6__OT0uLWazJi89Sg14O7NbzSg/exec', {
                 method: 'POST',
                 body: JSON.stringify(data),
                 headers: {
